@@ -1,0 +1,9 @@
+{ "name" : "3-2-1"
+, "version" : "0.0.1"
+, "engines" : { "node" : ">=0.1.101" }
+, "dependencies" :
+    { "express" : ">=1.0.0rc"
+    , "connect" : ">=0.2.1"
+    , "jade" : ">=0.2.2"
+    }
+}
