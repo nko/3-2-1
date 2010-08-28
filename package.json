@@ -5,8 +5,9 @@
     { "express" : "=1.0.0rc2"
     , "connect" : "=0.2.4"
     , "jade" : "=0.3.0"
-    , "sass" : "=0.4.3"
     , "mongodb" : "=0.7.9"
     , "formidable" : "=0.9.7"
+    , "websocket-server" : "=1.3.50"
+    , "websocket-client" : "=0.9.5"
     }
 }
