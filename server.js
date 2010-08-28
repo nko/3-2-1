@@ -1,2 +1,2 @@
-require("./vendor");
+require.paths.unshift("./vendor");
 require('./lib/router');
