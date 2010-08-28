@@ -1,2 +1,4 @@
 require.paths.unshift("./vendor");
-require('./lib/router');
+var router = require('./lib/router');
+
+r = router.createRouter();
