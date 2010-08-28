@@ -2,10 +2,11 @@
 , "version" : "0.0.1"
 , "engines" : { "node" : ">=0.1.101" }
 , "dependencies" :
-    { "express" : ">=1.0.0rc"
-    , "connect" : ">=0.2.1"
-    , "jade" : ">=0.2.2"
-    , "mongodb" : ">=0.7.9"
-    , "formidable" : ">=0.9.7"
+    { "express" : "=1.0.0rc2"
+    , "connect" : "=0.2.4"
+    , "jade" : "=0.3.0"
+    , "sass" : "=0.4.3"
+    , "mongodb" : "=0.7.9"
+    , "formidable" : "=0.9.7"
     }
 }
