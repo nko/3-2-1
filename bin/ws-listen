@@ -1,0 +1,14 @@
+#!/usr/bin/env node
+
+var WebSocket = require('websocket-client').WebSocket;
+
+var ws = new WebSocket(process.argv[2]);
+ws.on('wserror', function(e) {
+    console.log(e);
+});
+ws.on('message', function(e) {
+    console.log(e);
+});
+ws.on('close', function(e) {
+    console.log('close');
+});
