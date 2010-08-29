@@ -43,7 +43,7 @@ YUI.add("threel-gfx", function (Y) {
         d = d.req || d.res;
         d = d.pop();
 
-        console.log(d);
+        if (!d) return Y.ThreeL.fire("error", "Data object is empty in GFX.");
 
         if (!(d.id in txns)) {
             var newSeries = new TimeSeries();

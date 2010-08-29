@@ -8,6 +8,15 @@ YUI.add("threel-base", function (Y) {
         Y.ThreeL.fire("socket:json", Y.JSON.parse(ev.data));
     };
 
+    Y.ThreeL.on("error:recovery", function () {
+        Y.one("#error").setContent("");
+    });
+
+    Y.ThreeL.on("error", function (d) {
+        if ("object" === typeof d) d = d.message;
+        Y.one("#error").setContent("<p>" + d + "</p>");
+    });
+
     Y.ThreeL.on("hostname", function (host) {
         Y.one("#hostname").setContent(host);
     });
