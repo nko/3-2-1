@@ -3,26 +3,43 @@ require.paths.unshift("./vendor");
 var router = require('./lib/router').createRouter();
 var api = require('./lib/api').createServer();
 var app = require('./lib/app');
-var config = require('./lib/config').createConfig();
+var routerConfig = require('./lib/config').createRouterConfig();
 
 api.setRouter(router);
-api.setConfig(config);
-router.setConfig(config);
+api.setConfig(routerConfig);
+router.setConfig(routerConfig);
 
 router.listen(80);
 api.listen(8081);
 app.boot(8080);
 
+
+hardBlockedIps = []; 
+//blockedIps.push({ip: '127.0.0.1', expires: undefined});
+//hardBlockedIps.push({ip: '127.0.0.1', expires: 1283108585814});
+
+
+softBlockedIps = []; 
+//softBlockedIps.push({ip: '127.0.0.1', expires: undefined});
+//softBlockedIps.push({ip: '127.0.0.1', expires: 1283108585814});
+
+
 //Hard block list
 router.on('clientReq', function(req, res) {
-    var blockedIps = []; 
-    for (var i=0; i<blockedIps.length;i++) {
-        if (req.connection.remoteAddress === blockedIps[i]) {
-            req.connection.end();
-            res.end();
-            router.stopPropegation('clientReq');
-            router.preventDefault('clientReq');
-            break;
+
+    for (var i=0;i<hardBlockedIps.length;i++){
+        if (req.connection.remoteAddress === hardBlockedIps[i].ip) {
+            if (hardBlockedIps[i].expires !== undefined && (new Date).getTime() > hardBlockedIps[i].expires) {
+                console.log("Hard Block on IP " + hardBlockedIps[i].ip + " expired");
+                break;
+            } else {
+                req.connection.end();
+                res.end();
+                console.log("Hard Blocked IP " + hardBlockedIps[i].ip); 
+                router.stopPropegation('clientReq');
+                router.preventDefault('clientReq');
+                break;
+            }
         }
     }
 
@@ -30,17 +47,21 @@ router.on('clientReq', function(req, res) {
 
 //Soft block list
 router.on('clientReq', function(req, res) {
-    var blockedIps = [];
-    //var blockedIps = ['127.0.0.1'];
-    for (var i=0; i<blockedIps.length;i++) {
-        if (req.connection.remoteAddress === blockedIps[i]) {
-            var body = 'Denied'
-            res.writeHead(500, {'Content-Type': 'text/plain', 'Content-Length': body.length });
-            res.end(body);
-            req.connection.end();
-            router.stopPropegation('clientReq');
-            router.preventDefault('clientReq');
-            break;
+    for (var i=0;i<softBlockedIps.length;i++){
+        if (req.connection.remoteAddress === softBlockedIps[i].ip) {
+           if (softBlockedIps[i].expires !== undefined && (new Date).getTime() > softBlockedIps[i].expires) {
+                console.log("Soft Block on IP " + softBlockedIps[i].ip + " expired");
+                break;
+            } else {
+                var body = 'Denied'
+                res.writeHead(500, {'Content-Type': 'text/plain', 'Content-Length': body.length });
+                res.end(body);
+                req.connection.end();
+                console.log("Soft Blocked IP " + softBlockedIps[i].ip); 
+                router.stopPropegation('clientReq');
+                router.preventDefault('clientReq');
+                break;
+            }
         }
     }
 });
@@ -48,6 +69,7 @@ router.on('clientReq', function(req, res) {
 //bandwidth throttling
 router.on('beforeWriteChunk', function(req, res, response, chunk) {
     //kilobytes/second average
+
     maxBandwidth = 50*1024;
 
     if (that.lastChunkTime === undefined) {
