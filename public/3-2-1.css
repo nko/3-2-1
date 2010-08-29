@@ -1,0 +1,42 @@
+canvas {
+  margin: 0;
+  padding: 0;}
+
+h2, h3 {
+  font: bold 160% "Helvetica Neue", Helvetica, sans-serif;}
+
+#hd {
+  background: #fd6512;
+  color: #fff;
+  font: bold 250% "Helvetica Neue", Helvetica, sans-serif;
+  letter-spacing: : -4px;
+  padding: 20px;}
+
+#realtime {
+  width: 100%!important;
+  margin-bottom: -4px /* hack! */;}
+
+#hd h1 {
+  display: inline;
+  padding: 5px 10px;
+  background: #fff;
+  color: #000;}
+
+#hd span {
+  font-weight: 100;}
+
+.stack {
+  border-bottom: : 1px solid #fd6512;}
+
+.stack h2, .stack .bd, #ft {
+  padding: 5px 20px;}
+
+.stack h2 {
+  background: #f89938;
+  font-size: 90%;
+  text-transform: uppercase;}
+
+#ft {
+  padding-top: 20px;
+  font: 85% Helvetica, sans-serif;;
+  color: #ccc;}

@@ -1,0 +1,19 @@
+.stack
+  h2 #{host} Admin
+.stack
+  ul(id="hostnames")
+    - each datum in data 
+      li= datum
+
+  input(type="text", id="host")
+  input(type="submit", id="addhost", value="Add host")
+
+div(id="save")
+
+script var hosts = #{rawData}; var roothost = '#{host}';
+
+// include scripts, copy to admin if needed
+- if (scripts.length)
+  script(src: "http://yui.yahooapis.com/combo?3.1.2/build/yui/yui-min.js&3.1.2/build/loader/loader-min.js")
+- for (var k in scripts)
+  script(src: scripts[k])

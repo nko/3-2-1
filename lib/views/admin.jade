@@ -1,3 +1,9 @@
 .stack
   h2 Admin
+  p This is an interface to change the routing and other rules associated with the system
 .stack
+  h2 Domains
+  ul
+    - each datum in data 
+      li 
+        a(href: '/admin/' + datum) #{datum} 
