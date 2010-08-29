@@ -1,1 +1,4 @@
-YUI().use("threel-gfx", function (Y) {});
+YUI({}).use(
+"threel-gfx",
+"threel-explore"
+);
