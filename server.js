@@ -3,8 +3,11 @@ require.paths.unshift("./vendor");
 var router = require('./lib/router').createRouter();
 var api = require('./lib/api').createServer();
 var app = require('./lib/app');
+var config = require('./lib/config').createConfig();
 
-api.addEventSource(router);
+api.setRouter(router);
+api.setConfig(config);
+router.setConfig(config);
 
 router.listen(80);
 api.listen(8081);
@@ -27,8 +30,8 @@ router.on('clientReq', function(req, res) {
 
 //Soft block list
 router.on('clientReq', function(req, res) {
-    //var blockedIps = [];
-    var blockedIps = ['127.0.0.1'];
+    var blockedIps = [];
+    //var blockedIps = ['127.0.0.1'];
     for (var i=0; i<blockedIps.length;i++) {
         if (req.connection.remoteAddress === blockedIps[i]) {
             var body = 'Denied'
