@@ -7,3 +7,9 @@
   #traffic
 .stack
   a(href: "/admin") Go to Admin
+
+// include scripts, copy to admin if needed
+- if (scripts.length)
+  script(src: "http://yui.yahooapis.com/combo?3.1.2/build/yui/yui-min.js&3.1.2/build/loader/loader-min.js")
+- for (var k in scripts)
+  script(src: scripts[k])
