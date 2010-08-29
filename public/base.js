@@ -6,7 +6,11 @@ YUI.add("threel-base", function (Y) {
 
     socket.onmessage = function (ev) {
         console.log(ev.data);
-        Y.ThreeL.fire("socket:json", Y.JSON.parse(ev.data));
+        var json = Y.JSON.parse(ev.data);
+        var type = json.req ? "req" : "res";
+        var data = json.req || json.res;
+        data = data[0];
+        Y.ThreeL.fire("socket:json", data, type);
     };
 
     Y.ThreeL.on("error:recovery", function () {
@@ -23,8 +27,6 @@ YUI.add("threel-base", function (Y) {
     });
 
     Y.ThreeL.on("socket:json", function (d) {
-        d = d.req || d.res;
-        d = d.pop();
         if (d.origin) Y.ThreeL.fire("hostname", d.origin);
     });
 
