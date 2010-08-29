@@ -7,7 +7,7 @@ var config = require('./lib/config').createConfig();
 
 api.setRouter(router);
 api.setConfig(config);
-// router.setConfig(config);
+router.setConfig(config);
 
 router.listen(80);
 api.listen(8081);
