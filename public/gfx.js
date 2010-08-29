@@ -4,19 +4,22 @@ YUI.add("threel-gfx", function (Y) {
 
     // Smoothie
 
+    function randomRGB () {
+        var rnd = Math.round(Math.random() * 0xffffff);
+        return [
+            rnd >> 16,
+            rnd >> 8 &  255,
+            rnd & 255
+        ];
+    }
+
     var seriesStyle = (function () {
         function rgba (parts, opacity) {
             parts.push(opacity);
             return "rgba(" + parts.join(",") + ")";
         }
 
-        return function () {
-            var rnd = Math.round(Math.random() * 0xffffff);
-            var color = [
-                rnd >> 16,
-                rnd >> 8 &  255,
-                rnd & 255
-            ];
+        return function (color) {
             return {
                 strokeStyle : rgba(color, "1"),
                 // fillStyle : rgba(color, "0.2"),
@@ -31,7 +34,7 @@ YUI.add("threel-gfx", function (Y) {
             fillStyle : "#ffffff",
             strokeStyle : "#feb288",
             lineWidth : 1,
-            millisPerLine : 200,
+            millisPerLine : 500,
             verticalSections : 4
         }
     });
@@ -44,10 +47,12 @@ YUI.add("threel-gfx", function (Y) {
 
         if (!(d.id in txns)) {
             var newSeries = new TimeSeries();
+            var color = randomRGB();
             txns[d.id] = {
+                rgb : color,
                 series : newSeries
             };
-            chart.addTimeSeries(newSeries, seriesStyle());
+            chart.addTimeSeries(newSeries, seriesStyle(color));
         }
 
         var series = txns[d.id].series;
@@ -67,7 +72,7 @@ YUI.add("threel-gfx", function (Y) {
         appendToSmoothie(d);
     });
 
-    chart.streamTo(document.getElementById("realtime"), 200);
+    chart.streamTo(document.getElementById("realtime"), 1000);
 
     // Raphael
 
@@ -80,12 +85,6 @@ YUI.add("threel-gfx", function (Y) {
         cx : 700,
         r: 50
     }, 10000);
-
-/*
-    Y.on("socket:message", function (ev) {
-        // ev.data is socket data
-    });
-*/
 
 }, "0.0.1", { requires : [
     "threel-base"
