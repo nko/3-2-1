@@ -43,11 +43,12 @@ YUI.add("threel-gfx", function (Y) {
         d = d.req || d.res;
         d = d.pop();
 
-        console.log(d);
+        if (!d) return Y.ThreeL.fire("error", "Data object is empty in GFX.");
 
         if (!(d.id in txns)) {
             var newSeries = new TimeSeries();
             var color = randomRGB();
+            Y.ThreeL.fire("txn:color", d.id, color);
             txns[d.id] = {
                 rgb : color,
                 series : newSeries
@@ -73,18 +74,6 @@ YUI.add("threel-gfx", function (Y) {
     });
 
     chart.streamTo(document.getElementById("realtime"), 1000);
-
-    // Raphael
-
-    var paper = Raphael("traffic", 700, 500);
-
-    var server = paper.circle(600, 50, 30);  
-
-    // demo?!
-    server.animate({
-        cx : 700,
-        r: 50
-    }, 10000);
 
 }, "0.0.1", { requires : [
     "threel-base"
