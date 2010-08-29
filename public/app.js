@@ -6,12 +6,17 @@ YUI().use("json", function (Y) {
 
     socket.onmessage = function (ev) {
         var d = ev.data;
-        console.log(d);
         d = Y.JSON.parse(d);
-        console.log(d);
         d = d.req || d.res;
         d = d.pop();
-        series.append(d.time, d.size);
+        console.log(d);
+        var now = new Date().getTime();
+        console.log(d.size);
+        var size = d.size;
+        if ("undefined" === typeof size) size = 0;
+        size++;
+        console.log(size);
+        series.append(now, size);
     };
 
     var chart = new SmoothieChart({
