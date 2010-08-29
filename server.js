@@ -45,3 +45,27 @@ router.on('clientReq', function(req, res) {
     }
 });
 
+//bandwidth throttling
+router.on('beforeWriteChunk', function(req, res, response, chunk) {
+    //kilobytes/second average
+    maxBandwidth = 50*1024;
+
+    if (that.lastChunkTime === undefined) {
+        that.lastChunkTime = Math.floor(((new Date).getTime())/1000);
+        that.lastChunkSize = chunk.length;
+    } else {
+        var timeGap = (((new Date).getTime())/1000) - that.lastChunkTime;
+        var totalSize = that.lastChunkSize + chunk.length;
+
+        if ((totalSize/timeGap) > maxBandwidth) {
+            response.pause();
+            var timeout = Math.floor((totalSize - (maxBandwidth * timeGap)) / maxBandwidth)*1000;
+            setTimeout(function() { 
+                response.resume(); }, timeout);
+            that.lastChunkTime = (new Date).getTime();
+            that.lastChunkSize = chunk.size;
+        } else {
+            that.lastChunkSize = that.lastChunkSize + chunk.size;
+        }
+    }
+});
