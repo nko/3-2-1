@@ -5,6 +5,7 @@ YUI.add("threel-base", function (Y) {
     var socket = new WebSocket("ws://" + window.location.hostname + ":8081");
 
     socket.onmessage = function (ev) {
+        console.log(ev.data);
         Y.ThreeL.fire("socket:json", Y.JSON.parse(ev.data));
     };
 
