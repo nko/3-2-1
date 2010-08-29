@@ -5,8 +5,20 @@ YUI.add("threel-explore", function (Y) {
 
         var columns = [
             {
+                key : "rgb",
+                label : "Color",
+                formatter : function (cell, record, col, data) {
+                    data.pop();
+                    cell.innerHTML = "<div style='background: rgb(" + data.join(",") + "); width: 24px; height: 24px;'>&nbsp;</div>";
+                }
+            },
+            {
                 key : "method",
                 label : "Method",
+            },
+            {
+                key : "url",
+                label : "Path",
             },
             {
                 key : "srcIP",
@@ -20,7 +32,9 @@ YUI.add("threel-explore", function (Y) {
         ds.responseSchema = {
             resultsList : "",
             fields : [
+                "color",
                 "method",
+                "path",
                 "srcIP",
             ]
         };
@@ -44,8 +58,6 @@ YUI.add("threel-explore", function (Y) {
     function ensureTXN (d) {
         var id = d;
         if (typeof d === "object") {
-            d = d.req || d.res;
-            d = d.pop();
             if (!d) Y.ThreeL.fire("error", "Data object is empty in Explore.");
             id = d.id;
         }
@@ -71,12 +83,9 @@ YUI.add("threel-explore", function (Y) {
     var dt = createDT({});
 
     // from base
-    Y.ThreeL.on("socket:json", function (d) {
-        console.log(d);
+    Y.ThreeL.on("socket:json", function (d, type) {
+        if (type !== "req") return;
         ensureTXN(d);
-        var type = d.req ? "req" : "res";
-        d = d.req || d.res;
-        d = d.pop();
 
 
         txns[d.id].index = getIndex();        
@@ -86,6 +95,7 @@ YUI.add("threel-explore", function (Y) {
         console.log("YAY", d);
 
         if (!txns[d.id].active) {
+            d.rgb = txns[d.id].rgb;
             dt.addRow(d, txns[d.id].index);
         }
 

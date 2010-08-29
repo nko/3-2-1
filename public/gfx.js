@@ -40,8 +40,6 @@ YUI.add("threel-gfx", function (Y) {
     });
 
     function appendToSmoothie (d) {
-        d = d.req || d.res;
-        d = d.pop();
 
         if (!d) return Y.ThreeL.fire("error", "Data object is empty in GFX.");
 
