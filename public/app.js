@@ -32,7 +32,7 @@ YUI().use("json", function (Y) {
         }
     });
 
-    var socket = new WebSocket("ws://localhost:8081");
+    var socket = new WebSocket("ws://" + window.location.hostname + ":8081");
 
     // transaction store
     var txns = {};
