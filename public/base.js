@@ -5,7 +5,6 @@ YUI.add("threel-base", function (Y) {
     var socket = new WebSocket("ws://" + window.location.hostname + ":8081");
 
     socket.onmessage = function (ev) {
-        console.log(ev.data);
         var json = Y.JSON.parse(ev.data);
         var type = json.req ? "req" : "res";
         var data = json.req || json.res;
