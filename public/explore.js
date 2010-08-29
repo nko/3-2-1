@@ -87,12 +87,7 @@ YUI.add("threel-explore", function (Y) {
         if (type !== "req") return;
         ensureTXN(d);
 
-
         txns[d.id].index = getIndex();        
-
-        // if (!txns[d.id].rgb) // ?
-
-        console.log("YAY", d);
 
         if (!txns[d.id].active) {
             d.rgb = txns[d.id].rgb;
@@ -101,22 +96,6 @@ YUI.add("threel-explore", function (Y) {
 
     });
 
-/*
- 
-        var formatUrl = function(elCell, oRecord, oColumn, sData) {
-            elCell.innerHTML = "<a href='" + oRecord.getData("url") + "' target='_blank'>" + sData + "</a>";
-        };
- 
-        var formatImg = function (elCell, oRecord, oColumn, sData) {
-            elCell.innerHTML = "<img src='" + sData + "'/>";
-        };
- 
-        var myColumnDefs = [
-            {key:"image_url_155x125", label:"Image", formatter:formatImg},
-            {key:"title", label:"Name", sortable:true, formatter:formatUrl},
-            {key:"user_name", label:"User"}
-        ];
-*/
 }, "0.0.1", { requires : [
     "threel-base",
     "yui2-datatable"

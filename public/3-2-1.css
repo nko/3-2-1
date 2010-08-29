@@ -36,6 +36,17 @@ h2, h3 {
   font-size: 90%;
   text-transform: uppercase;}
 
+#error p {
+  border: 5px solid red;
+  padding: 10px;
+  font-weight: bold;
+  color: red;
+  text-align: center;}
+
+.stack p {
+  padding: 5px 10px;
+  font-size: : 18px;}
+
 #ft {
   padding-top: 20px;
   font: 85% Helvetica, sans-serif;;

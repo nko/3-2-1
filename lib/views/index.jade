@@ -1,15 +1,22 @@
 #error
 .stack
+  h2 Welcome
+  p
+    | For more about this app,
+    a(href: "http://wiki.github.com/nko/3-2-1/") read the 3-2-1 team wiki
+    | !
+  p
+    | Why not
+    a(href: "/admin") Administrate
+    | ?
+.stack
   h2 Throughput
   canvas#realtime(width: "800", height: "205")
     | This application requires Canvas support in your web browser.
 .stack.yui-skin-sam
   h2 Explorer
   #requests
-.stack
-  a(href: "/admin") Go to Admin
 
-// include scripts, copy to admin if needed
 - if (scripts.length)
   script(src: "http://yui.yahooapis.com/combo?3.1.2/build/yui/yui-min.js&3.1.2/build/loader/loader-min.js")
 - for (var k in scripts)
